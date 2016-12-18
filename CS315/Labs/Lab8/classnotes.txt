@@ -1,0 +1,21 @@
+algorithm
+|
+|
+|	cnlogn -> optimal
+|	sorting			     | halting problem
+| (easy) |	(medium)      (hard) | (impossible)
+---------------------------------------------
+problem and its complexity
+
+O(n^p) can get ugly fast
+
+problem:
+   instance: a1, ..., an, < R
+   question: what is the max element in {a, ..., an}
+
+upper bound: n-1
+lower bound: based on computing model: n-1
+
+Approximation algorithms are used to drastically reduce the running time of more compilicated algorithms by making a few guesses, and making a less accurate solution. ****
+
+

@@ -1,0 +1,4 @@
+Info: Starting NoMachine Monitor version '5.1.42'.
+Info: Loaded translation files for 'English'.
+30291 30291 15:41:36 278.751 Main: Creating a new update client.
+30291 30291 15:41:36 334.464 Updater: WARNING! Unsetting DBUS_SESSION_BUS_ADDRESS variable.

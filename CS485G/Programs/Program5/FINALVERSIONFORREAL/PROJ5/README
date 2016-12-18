@@ -1,0 +1,9 @@
+Authors: Tristan Basil and Katie Long
+
+Files:  Makefile
+	server.c
+	mcput.c
+	mcget.c
+	mclist.c
+	mcdel.c
+	Documentation.txt

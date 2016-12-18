@@ -1,0 +1,19 @@
+what is the minimal number of coins to make change for n dollars with given
+ denominations?
+
+ex. denominations: 1 5 10 25
+
+Does the greedy method: "use the biggest possible denominations" always work?
+ex denomintaions: 1 5 10 12 25 50
+Greedy algorithm returns 5 coins for n = 29. Is it optimal?
+answer: not particularly. you could do 12, 12, and 5 to optimize to 3 coins.
+	so the greedy method doesn't always work.
+
+Formula:
+ch(n) = change
+
+
+ch(n)df = min # coins to change
+	{ 0			   if n=0
+ch(n) = { 
+	{ min(i:d_i<=n){ch(n-x)+1} otherwise

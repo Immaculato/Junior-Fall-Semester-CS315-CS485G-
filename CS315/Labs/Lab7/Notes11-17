@@ -1,0 +1,21 @@
+Floyd-Warshall Algorithm:
+	A - distances
+
+Write a solution to APSP (all pairs shortest path)
+
+Input:
+	n - size of the matrix followed by lines each of size n:
+	a1, a2, ...., an
+	.
+	.
+	.
+	an1, an2, ..., ann
+
+Output
+	a11, a12, ...
+	...
+	an1, an2,	aij
+
+
+
+**use gprof to figure out why program sucks balls*

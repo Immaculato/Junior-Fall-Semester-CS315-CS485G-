@@ -1,0 +1,10 @@
+we have n steps, meaning we climb n times.
+each step burns 15 calories.
+you can climb 1 or 2 steps at a time.
+
+note: if you take 1 step, you are left with n-1 steps.
+similarly, if you take a double step, you are left with n-2 steps.
+
+how many ways can you lose 15n calories climbing n steps?
+
+Hint: Think recursively!

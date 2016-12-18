@@ -1,0 +1,11 @@
+fork call questions
+a) separate processes are called, and they separately print the line one after the other.
+c) the child.
+e) because the processes are running in parallel. this means that each line of execution is taken once in separate processes.
+
+multiple fork calls
+i predict 2 1's, 4 2's, 2 3's, and 2 4's.
+i was wrong, i did not take into account the fork in the if statement.
+
+execshit
+ 

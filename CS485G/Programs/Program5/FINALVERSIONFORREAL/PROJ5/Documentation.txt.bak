@@ -1,0 +1,45 @@
+MYCLOUD SERVER DOCUMENTATION
+
+ABOUT:
+	MyCloud server is a cloud based filehosting service utilzing Unix TCP/IP sockets in order to store, retrieve, list, and delete files on the server. Additionally, the client must provide
+	a secret key matching the one used by the server in order to access any of the applications. The applications users can invoke are mcput, mcget, mcdel, and mclist. The server must be 
+	running in order for a client to connect. MyCloud uses the utilities found in the RIO library that can be found in csapp.c and csapp.h at http://csapp.cs.cmu.edu/public/code.html. 
+
+TO USE:
+	Compile all programs by running "make."
+
+APPLICATIONS:
+	mcput-  Usage: ./mcput <host> <port> <SecretKey> <filename> 
+		mcput stores a file on the server that is taken from standard input. The file must be null terminated or it will not be written to the server (for files not redirected into the 
+		program, a Ctr-D command suffices). Filenames can be no longer than 80 bytes and the max file length that can be sored is 100 kilobytes. Incorrect secret ports and hosts result 
+		in no response and exit by the client. Incorrect SecretKeys result in early termination and no write to the server. If the file already exists it is overwritten.
+		A simple algorithm that was used to address the problem of max size writes was to divide the input file in chunks of 10k bytes, if the file was larger than that size. The 
+		remainder is sent after the chunks to finish the file transfer. This same algorithm is used server-side in an mcget operation to re-write the file back to the client.
+
+	mcget- Usage: ./mcget <host> <port> <SecretKey> <filename>
+		mcget retrieves a file stored on the serer and prints it to standard out. If the file does not exist, the server returns an error and the client terminates. If the secret key is 
+		incorrect the program terminates.
+
+	mcdel- Usage: ./mcdel <host> <port> <SecretKey> <filename>
+		mcdel deletes a file stored on the server. If the file does not exist the server reports the error and the client terminates. If the provided secret key is incorrect, it terminates
+		with an error.
+
+	mclist- Usage: ./mclist <host> <port> <SecretKey>
+		mclist prints to standard out a list of all files stored on the server. If no files exist, it prints nothing and exits. If the provided secret key is incorrect, it terminates with
+		an error.
+		
+
+SERVER PROGRAM:
+	Usage:  ./server <port> <SecretKey>
+	
+	The server program must be initialized with a port number higher than 2000, as they are reserved by the system. The secret key can be any unsigned int. On every successful connection to the 
+	server the Secret Key, Request Type, Filename, and Operation Status are printed to standard output. The request type is one of the following: put, get, list, or del. The file name lists the
+	name of the file provided by a client, if any. If the Secret Key is incorrect, the filename reads NONE. On error, the operation status reads "error" and on succes, "succes."
+
+	
+	
+
+ERRATA:
+	When an incorrect secret key is provided to the program mcput, the server registers the operation as an error. Additionally, trying to add more than 40 files results in no write to the server
+	However, this is not reflected in output on the client side. Users can stll attempt to write a file, but the file will not be written to the server. The response is sent, this implementation
+	sometimes fails to catch it.

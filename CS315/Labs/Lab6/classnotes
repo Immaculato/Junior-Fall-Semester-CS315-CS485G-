@@ -1,0 +1,20 @@
+Union Find ----------
+Uses set partitions (groups of elements).
+
+3 operations:
+	makeset( . )
+	find( . )  -->  finds the set containing this element. Usually there is a representative of the set, which is 1 designated element in it.
+	union( . , . ) --> returns a set containing both of the provided sets.
+
+should always attach smaller tree to larger.
+
+path compression: attaching all graph eleents to the node.
+
+path compression pseudocode:
+
+function Find(x) {
+	if (x.parent != x) {
+		x.parent = Find(x.parent);
+	}
+	return x.parent;
+}

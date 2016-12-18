@@ -1,0 +1,8 @@
+	cat test2.c
+   	gcc -Wall -O0 -o test2 test2.c
+   	time ./test2 10
+   	time ./test2 1000
+   	gcc -Wall -pg -g -O0 -o test2 test2.c
+   	time ./test2 1000
+   	gprof -p ./test2 | more
+   	gprof -q ./test2 | more

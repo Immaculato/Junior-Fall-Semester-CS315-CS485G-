@@ -1,0 +1,9 @@
+Info: Slave server running with pid 24303.
+Info: Listening to slave connections on port 25001.
+24296 24296 00:43:34 456.114 UiUtility: Converting system language en_US to supported standard.
+Info: Starting NoMachine Monitor version '5.1.42'.
+Info: Loaded translation files for 'English'.
+24296 24296 00:43:34 488.676 OsDetect: Setting os type to 'Ubuntu'.
+24296 24296 00:43:34 488.744 Main: Creating a new connection monitor.
+24296 24296 00:43:36 657.934 ClientThread: Creating new thread.
+24296 24296 00:43:37 118.108 MonitorService: Enabled drag and drop feature.

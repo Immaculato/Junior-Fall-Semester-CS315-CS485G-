@@ -1,0 +1,22 @@
+# Gnuplot script file for plotting data in file "runtime.dat"
+      # This file is called   gp.script
+set output "data_p.png"
+set terminal png
+     set   autoscale                        # scale axes automatically
+      unset log                              # remove any log-scaling
+      unset label                            # remove any previous labels
+      set xtic auto                          # set xtics automatically
+      set ytic auto                          # set ytics automatically
+      set title "Running time for Floyd-Warshall"
+set xlabel "input size"
+set ylabel "time"
+f(x) = a*x**3
+fit f(x) 'a.dat'  via a
+plot "a.dat" using 1:2 title 'Time',\
+      a * x**3 title 'fit a*x^3 with a=8.30383e-09'
+#
+#Final set of parameters            Asymptotic Standard Error
+#=======================            ==========================
+#a               = 8.30383e-09      +/- 1.427e-10    (1.719%)
+
+

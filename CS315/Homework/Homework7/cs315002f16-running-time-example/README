@@ -1,0 +1,32 @@
+cs315002 Fall 2016
+UK CS JWJ
+An example of experimental analysis for Floyd-Warshall
+This algorithm has O(n^3) running time, that only depends on the dimension of the matrix and
+otherwise does not depend on that matrix.
+
+For some algorithms, the worst-case running time may manifest itself
+only for some type of data. In such cases the experimental analysis should be conducted on there types of inputs:
+	- random: generated with pesudo-RNG
+	- synthesized: prepared by the tester to expose possible errors and easy and hard cases
+	- domain specific: data for the specific application for which the software is developed.
+
+The cpp file is instrumented with chrono functions and additional counters.
+THe measurements are tabulated in a file.
+gnuplot is used to visualize the running time; alternativel Excel could be used.
+
+-------steps----------------
+#cs315002 Fall 2016 CS-UK JWJ
+#steps to perform experiments with Floyd_Warshall
+cat steps.sh
+cat FloydWarshall-instrumented.cpp
+g++ --std=c++11 FloydWarshall-instrumented.cpp
+cat main_1.in
+./a.out < main_1.in > a.dat
+cat a.dat
+cat gp.script
+gnuplot gp.script
+gimp data_p.png
+-------END-------------------
+
+
+Additionally, this directory includes files for your homework assignment.

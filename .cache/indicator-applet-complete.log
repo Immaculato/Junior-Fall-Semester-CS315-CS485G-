@@ -1,0 +1,31 @@
+DEBUG: Indicator-Applet-Complete - Icons directory: /usr/share/libindicator/icons/
+WARNING: Indicator-Applet-Complete - Binding '<Super>S' failed!
+
+DEBUG: Indicator-Applet-Complete - Looking at Module: libprintersmenu.so
+DEBUG: Indicator-Applet-Complete - Loading Module: libprintersmenu.so
+DEBUG: Indicator-Applet-Complete - Looking at Module: libapplication.so
+DEBUG: Indicator-Applet-Complete - Loading Module: libapplication.so
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.sound
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.datetime
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.power
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.keyboard
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.session
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.messages
+DEBUG: Indicator-Applet-Complete - loading indicator: com.canonical.indicator.bluetooth
+DEBUG: Indicator-Application - Connected to Application Indicator Service.
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from com.canonical.indicator.sound
+DEBUG: Indicator-Applet-Complete - Placing com.canonical.indicator.sound (indicator-sound): -1
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from com.canonical.indicator.datetime
+DEBUG: Indicator-Applet-Complete - Placing com.canonical.indicator.datetime (indicator-datetime): -1
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from com.canonical.indicator.session
+DEBUG: Indicator-Applet-Complete - Placing com.canonical.indicator.session (indicator-session): -1
+DEBUG: Indicator-Application - Request current apps
+DEBUG: Indicator-Application - Building new application entry: :1.45  with icon: nm-no-connection at position 0
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from libapplication.so
+DEBUG: Indicator-Applet-Complete - Placing libapplication.so (nm-applet): 8
+CRITICAL: Gtk - gtk_distribute_natural_allocation: assertion 'extra_space >= 0' failed
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from com.canonical.indicator.keyboard
+DEBUG: Indicator-Applet-Complete - Placing com.canonical.indicator.keyboard (indicator-keyboard): -1
+DEBUG: Indicator-Application - Building new application entry: org.kde.StatusNotifierItem-24296-1  with icon: /usr/NX/share/images/tray-ubuntu-light.png at position 0
+DEBUG: Indicator-Applet-Complete - Signal: Entry Added from libapplication.so
+DEBUG: Indicator-Applet-Complete - Placing libapplication.so (NoMachineMonitor): -1

@@ -1,0 +1,302 @@
+Script started on Fri 26 Aug 2016 01:25:55 PM EDT
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ ls
+callgrind.out.4069  gmon.out  mysession.txt  [0m[01;32mtest[0m  test.c
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ vi test.c
+[?1049h[?1h=[2;1H▽[6n[1;1H  [1;1H[1;46r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[46;1H"test.c" 104L, 3529C[>c[1;1H[34m/* The web site http://www.ibm.com/developerworks/library/l-gnuprof.html has
+ * a nice description of how to use the gprof utility.  Please consult
+ * that site for additional information.  The following code is derived
+ * from code on that page, but shows an addition level of procedure calls.
+ *
+ * A nice overview of the features and command line options available in
+ * gprof can be found here http://www.cs.utah.edu/dept/old/texinfo/as/gprof.html
+ *
+ * Your goal in this exercise is to use the gcc, gprof, and valgrind programs
+ * to analyze the performance of the program below.   You should follow
+ * the steps below and should save your session in a file called mysession.txt.
+ * You should then upload your "mysession.txt" file to the
+ * CS Portal: https://www.cs.uky.edu/csportal.
+ *
+ * YOU MUST PERFORM THIS EXERCISE ON YOUR VM.
+ *
+ * A. Record your session:
+ *   1. Use the "script" command (script mysession.txt)
+ *
+ * B. Read through the test program to see what it is doing
+ *   1. Use one of less, vim, emacs, gedit, or some other program
+ *      to display the program.
+ *  
+ * C. Compile with varying levels of optimizations and time the runtime
+ *   1. Compile with no optimizations using the -O0 option (gcc -Wall -O0 -o test test.c)[26;1H *   2. Run and time the program (time ./test 1000)
+ *   3. Compile with max optimizations using the -O3 option (gcc -Wall -O3 -o test test.cc[28;1H)
+ *   4. Run and time the program (time ./test 1000)
+ *   5. Say which is faster (echo "The FILL_IN_THE_BLANK was faster.  It took FILL_IN_THEE[31;1H_BLANK time.")
+ *
+ * D. Profile both versions of the program using "gprof"
+ *    (Do the following steps twice: first with a test program
+ *     with no optimizations (-O0), and then with a test program
+ *     with max optimizations (-O3).
+ *   Steps to use gprof:
+ *   1. compile with profiling and debugging options (-p and -g)
+ *       and with the appropriate optimization.  For
+ *       example, with no optimization it would be "gcc -Wall -p -g -O0 -o test test.c"
+ *   2. run the program (./test 1000)
+ *   3. print a "flat profile" (gprof -p ./test)
+ *   4. print a "call stack profile" (gprof -q ./test)
+ *
+ * (Remember to repeat the above steps using max optimizations)[m[46;72H1,1[11CTop[1;1H[?12l[?25h[?25l[46;72H43,2[45;2H[?12l[?25h[?25l[46;75H1[45;1H[?12l[?25h[?25l[46;1H[K[46;1H:[?12l[?25hq[?25l[?12l[?25h[?25l[46;1H[K[46;1H[?1l>[?12l[?25h[?1049l]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gcc -Wall -o)[K[KO0 -o test text[K[Kxs[K[Kst.c
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ time ./test 1000
+No of iterations = 1000
+
+real	0m2.254s
+user	0m2.249s
+sys	0m0.008s
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ time ./test 1000gcc -Wall -O0 -o test test.c[C[1P[1@3
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ time ./test 1000
+No of iterations = 1000
+
+real	0m0.002s
+user	0m0.000s
+sys	0m0.001s
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ echo "The max option [K[K[Kmization option (O[K-O#[K3) was faster. It too k 0m0.000s user time."
+The max optimization option (-O3) was faster. It took 0m0.000s user time.
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ echo "The max optimization option (-O3) was faster. It tookk 0m0.000s user time."[A]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ [K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgcc -Wall -p -g -O0 -o test text.c[K[K[K[Kst.c
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ ./test 1000
+No of iterations = 1000
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -p ./test
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 47.08      1.04     1.04     1000     1.04     1.04  c
+ 43.88      2.01     0.97     1000     0.97     2.01  b
+ 10.06      2.23     0.22     1000     0.22     0.22  a
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -p ./test[1P ./test1 ./test[1P ./testq ./test
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.45% of 2.23 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00    2.23                 main [1]
+                0.97    1.04    1000/1000        b [2]
+                0.22    0.00    1000/1000        a [4]
+-----------------------------------------------
+                0.97    1.04    1000/1000        main [1]
+[2]     90.0    0.97    1.04    1000         b [2]
+                1.04    0.00    1000/1000        c [3]
+-----------------------------------------------
+                1.04    0.00    1000/1000        b [2]
+[3]     46.6    1.04    0.00    1000         c [3]
+-----------------------------------------------
+                0.22    0.00    1000/1000        main [1]
+[4]     10.0    0.22    0.00    1000         a [4]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [4] a                       [2] b                       [3] c
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -q ./testp[C[C[C[C[C[C[C[4P./test 1000gcc -Wall -p -g -O0 -o test test.c[C[1P[1@3
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ ./test 1000
+No of iterations = 1000
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -p ./test
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -p ./test[1P ./test1 ./test[1P ./testq ./test
+gprof: gmon.out file is missing call-graph data
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ gprof -q ./testp[C[C[C[C[C[C[C[4P./test 1000gcc -Wall -p -g -O3 -o test test.c[1P[1@0
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ valgrind --tool=callgrind ./test 1000
+==4172== Callgrind, a call-graph generating cache profiler
+==4172== Copyright (C) 2002-2013, and GNU GPL'd, by Josef Weidendorfer et al.
+==4172== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4172== Command: ./test 1000
+==4172== 
+==4172== For interactive control, run 'callgrind_control -h'.
+No of iterations = 1000
+==4172== 
+==4172== Events    : Ir
+==4172== Collected : 6300442771
+==4172== 
+==4172== I   refs:      6,300,442,771
+Profiling timer expired
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ kcachegrind
+kcachegrind: cannot connect to X server 
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ kcachegrindvalgrind --tool=callgrind ./test 1000[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3Pgcc -Wall -p -g -O0 -o test test.c[C[C[1P[1@3
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ valgrind --tool=callgrind ./test 1000
+==4183== Callgrind, a call-graph generating cache profiler
+==4183== Copyright (C) 2002-2013, and GNU GPL'd, by Josef Weidendorfer et al.
+==4183== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==4183== Command: ./test 1000
+==4183== 
+==4183== For interactive control, run 'callgrind_control -h'.
+No of iterations = 1000
+==4183== 
+==4183== Events    : Ir
+==4183== Collected : 170131
+==4183== 
+==4183== I   refs:      170,131
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ kcachegrind
+kcachegrind: cannot connect to X server 
+]0;taba238@taba238: ~/CS485G/Lab1taba238@taba238:~/CS485G/Lab1$ exit
+Script done on Fri 26 Aug 2016 01:29:53 PM EDT
